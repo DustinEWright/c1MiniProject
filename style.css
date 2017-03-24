@@ -1,0 +1,13 @@
+body {
+  background-color: black;
+}
+
+h1, h2 {
+  font-family: arial;
+  color: lightgray;
+}
+
+canvas {
+  height: 300px;
+  border: 1px solid lightgray;
+}
