@@ -9,24 +9,29 @@
 
 <body>
     <h1>Filter Fun</h1>
-    <canvas id="can"></canvas>
-    <!-- This is where the original (OEM) image is loaded. -->
-    <h2>Load Image To Be Modified:</h2>
-    <p>
-        <input type="file" multiple="false" accept="image/*" id="OEM-Image" onclick="loadImage()">
-    </p>
+        <canvas id="can"></canvas>
+        
+        <!-- This is where the original (OEM) image is loaded. -->
+        <h2>Load Image To Be Modified:</h2>
+        <p>
+            <input type="file" multiple="false" accept="image/*" id="OEM-Image" onclick="loadImage()">
+        </p>
+        
     <!-- This is where the filter slections are setup. -->
     <h2>Choose Filter:</h2>
-    <p>
-        <!-- Grayscale Filter -->
-        <input type="button" value="Apply Grayscale Filter Effect" onclick="grayscaleFiter()">
-        <!-- Red Filter -->
-        <input type="button" value="Apply Red Filter Effect" onclick="redFilter()">
+        <p>
+            <!-- Grayscale Filter -->
+            <input type="button" value="Apply Grayscale Filter Effect" onclick="grayscaleFiter()">
+            <!-- Red Filter -->
+            <input type="button" value="Apply Red Filter Effect" onclick="redFilter()">
+        </p>
+        
         <p>
             <!-- Rainbow Filter -->
             <input type="button" value="Apply Rainbow Filter Effect" onclick="rainbowFilter()">
         </p>
-        <h2>Start Over:</h2>
+        
+    <h2>Start Over:</h2>
         <p>
             <!-- This is where the image is reverted back to the original. -->
             <input type="button" value="Reset Image To Original" onclick="resetImage()">
@@ -35,5 +40,6 @@
 
 
 </body>
+
 </html>
 </DOCTYPE>
