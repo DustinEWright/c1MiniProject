@@ -4,7 +4,7 @@ function loadImage() {
 }
 
 // Filter Effects:
-function grayScale() {
+function grayscaleFiter() {
   alert("Grayscale Filter Applied.")
 }
 
