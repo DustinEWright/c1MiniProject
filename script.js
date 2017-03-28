@@ -1,6 +1,15 @@
+// Global Variables
+var canvas = document.getElementById("can");
+var originalImage = null;
+var grayImage = null;
+var fileinput = document.getElementById("OEM-Image");
+/* global SimpleImage */
+
 // Load the original image:
 function loadImage() {
-  alert("Image Loaded.")
+  originalImage = new SimpleImage(fileinput);
+  grayImage = new SimpleImage(fileinput);
+  originalImage.drawTo(canvas);
 }
 
 // Filter Effects:
