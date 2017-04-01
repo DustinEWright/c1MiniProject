@@ -2,11 +2,11 @@
 var canvas = document.getElementById("can");
 var originalImage = null;
 var grayImage = null;
-var fileinput = document.getElementById("OEM-Image");
 /* global SimpleImage */
 
 // Load the original image:
 function loadImage() {
+  var fileinput = document.getElementById("OEM-Image");
   originalImage = new SimpleImage(fileinput);
   grayImage = new SimpleImage(fileinput);
   originalImage.drawTo(canvas);
