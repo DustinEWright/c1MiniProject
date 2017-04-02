@@ -1,5 +1,5 @@
 // Global Variables
-var canvas = document.getElementById("can");
+var canvas = null;
 var originalImage = null;
 var grayImage = null;
 /* global SimpleImage */
@@ -9,6 +9,7 @@ function loadImage() {
   var fileinput = document.getElementById("OEM-Image");
   originalImage = new SimpleImage(fileinput);
   grayImage = new SimpleImage(fileinput);
+  canvas = document.getElementById("can");
   originalImage.drawTo(canvas);
 }
 
