@@ -1,4 +1,4 @@
-// Load the original image:
+// Global variables:
 var originalImage = null;
 var grayImage = null;
 var redImage = null;
@@ -6,23 +6,7 @@ var rainbowImage = null;
 var canvas = null;
 /* global SimpleImage */
 
-function imageIsLoaded(image) {
-    if (image != null && image.complete()) {
-        return true;
-    }
-    else {
-        alert("Image not ready.");
-        return false;
-    }
-}
-
-function doGray() {
-    if (imageIsLoaded(grayImage)) { // check if image is loaded
-        grayscaleFiter(); // function performs the grayscale work
-        grayImage.drawTo(canvas); // display image
-    }
-}
-
+// Load the image from "Choose Files"
 function loadImage() {
     canvas = document.getElementById("can");
     var fileInput = document.getElementById("OEM-Image");
@@ -31,6 +15,22 @@ function loadImage() {
     redImage = new SimpleImage(fileInput);
     rainbowImage = new SimpleImage(fileInput);
     originalImage.drawTo(canvas);
+}
+
+// Reset the image back to the original version
+function resetImage() {
+    originalImage.drawTo(canvas);
+}
+
+// Test if the image is ready before applying a filter:
+function imageIsLoaded(image) {
+    if (image != null && image.complete()) {
+        return true;
+    }
+    else {
+        alert("Image not ready.");
+        return false;
+    }
 }
 
 // Filter Effects:
@@ -44,11 +44,6 @@ function grayscaleFiter() {
     grayImage.drawTo(canvas);
 }
 
-// Reset the image back to the original version
-function resetImage() {
-    originalImage.drawTo(canvas);
-}
-
 function redFilter() {
     resetImage()
     alert("Red Filter Applied.")
@@ -57,4 +52,11 @@ function redFilter() {
 function rainbowFilter() {
     resetImage()
     alert("Rainbow Filter Applied.")
+}
+
+function doGray() {
+    if (imageIsLoaded(grayImage)) { // check if image is loaded
+        grayscaleFiter(); // function performs the grayscale work
+        grayImage.drawTo(canvas); // display image
+    }
 }
