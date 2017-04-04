@@ -1,7 +1,9 @@
 // Global Variables
-var canvas = null;
 var originalImage = null;
 var grayImage = null;
+var redImage = null;
+var rainbowImage = null;
+var canvas = null;
 /* global SimpleImage */
 
 // Load the original image:
