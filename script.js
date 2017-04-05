@@ -18,14 +18,21 @@ function loadImage() {
 function imageIsLoaded(image) {
   if (image != null && image.complete()) {
     return true;
-  } else {
+  }
+  else {
     alert("Image is not loaded.");
   }
 }
 
 // Filter Effects:
 function grayscaleFiter() {
-  alert("Grayscale Filter Applied.")
+  for (var pixel of grayImage.values()) {
+    var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) /3;
+    pixel.setRed(avg);
+    pixel.setGreen(avg);
+    pixel.setBlue(avg);
+  }
+  grayImage.drawTo(canvas);
 }
 
 function redFilter() {
