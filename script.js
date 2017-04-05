@@ -15,6 +15,14 @@ function loadImage() {
   originalImage.drawTo(canvas);
 }
 
+function imageIsLoaded(image) {
+  if (image != null && image.complete()) {
+    return true;
+  } else {
+    alert("Image is not loaded.");
+  }
+}
+
 // Filter Effects:
 function grayscaleFiter() {
   alert("Grayscale Filter Applied.")
