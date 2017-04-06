@@ -28,7 +28,7 @@ function imageIsLoaded(image) {
 // Filter Effects:
 function grayscaleFiter() {
   for (var pixel of grayImage.values()) {
-    var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) /3;
+    var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
     pixel.setRed(avg);
     pixel.setGreen(avg);
     pixel.setBlue(avg);
@@ -44,9 +44,14 @@ function rainbowFilter() {
   alert("Rainbow Filter Applied.")
 }
 
-// Reset the image back to the original version
+// Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
-  alert("Image Reset To Original.");
+  if (imageIsLoaded(originalImage)) {
+    originalImage.drawTo(canvas);
+    grayImage = originalImage;
+    redImage = originalImage;
+    rainbowImage = originalImage;
+  }
 }
 
 // This is what the grayscale button actually calls.
@@ -56,4 +61,3 @@ function doGray() {
     grayImage.drawTo(canvas);
   }
 }
-
