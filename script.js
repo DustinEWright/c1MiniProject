@@ -15,6 +15,7 @@ function loadImage() {
   originalImage.drawTo(canvas);
 }
 
+// Checks if the image is loaded & ready.
 function imageIsLoaded(image) {
   if (image != null && image.complete()) {
     return true;
@@ -47,3 +48,12 @@ function rainbowFilter() {
 function resetImage() {
   alert("Image Reset To Original.");
 }
+
+// This is what the grayscale button actually calls.
+function doGray() {
+  if (imageIsLoaded(grayImage)) {
+    grayscaleFiter();
+    grayImage.drawTo(canvas);
+  }
+}
+
