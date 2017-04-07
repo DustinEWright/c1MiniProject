@@ -61,3 +61,26 @@ function doGray() {
     grayImage.drawTo(canvas);
   }
 }
+
+
+
+
+/*
+function redFilter(image) {
+    for (var pixel of image.values()) {
+        avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+        if (avg < 128) {
+         pixel.setRed(avg * 2);
+         pixel.setGreen(0);
+         pixel.setBlue(0);
+        }
+        else {
+            pixel.setRed(255);
+            pixel.setGreen((avg * 2) - 255);
+            pixel.setBlue((avg * 2) - 255);
+        }
+    }
+}
+
+
+*/
