@@ -37,8 +37,22 @@ function grayscaleFiter() {
 }
 
 function redFilter() {
-  alert("Red Filter Applied.")
+    for (var pixel of redImage.values()) {
+       var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+        if (avg < 128) {
+         pixel.setRed(avg * 2);
+         pixel.setGreen(0);
+         pixel.setBlue(0);
+        }
+        else {
+            pixel.setRed(255);
+            pixel.setGreen((avg * 2) - 255);
+            pixel.setBlue((avg * 2) - 255);
+        }
+    }
 }
+
+
 
 function rainbowFilter() {
   alert("Rainbow Filter Applied.")
@@ -62,7 +76,12 @@ function doGray() {
   }
 }
 
-
+function doRed() {
+  if (imageIsLoaded(redImage)) {
+    redFilter();
+    redImage.drawTo(canvas);
+  }
+}
 
 
 /*
