@@ -37,19 +37,20 @@ function grayscaleFiter() {
 }
 
 function redFilter() {
-    for (var pixel of redImage.values()) {
-       var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
-        if (avg < 128) {
-         pixel.setRed(avg * 2);
-         pixel.setGreen(0);
-         pixel.setBlue(0);
-        }
-        else {
-            pixel.setRed(255);
-            pixel.setGreen((avg * 2) - 255);
-            pixel.setBlue((avg * 2) - 255);
-        }
+  redImage = originalImage;
+  for (var pixel of redImage.values()) {
+    var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+    if (avg < 128) {
+      pixel.setRed(avg * 2);
+      pixel.setGreen(0);
+      pixel.setBlue(0);
     }
+    else {
+      pixel.setRed(255);
+      pixel.setGreen((avg * 2) - 255);
+      pixel.setBlue((avg * 2) - 255);
+    }
+  }
 }
 
 
@@ -61,11 +62,11 @@ function rainbowFilter() {
 // Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
   if (imageIsLoaded(originalImage)) {
-    originalImage.drawTo(canvas);
     grayImage = originalImage;
     redImage = originalImage;
     rainbowImage = originalImage;
   }
+  originalImage.drawTo(canvas);
 }
 
 // This is what the grayscale button actually calls.
