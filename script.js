@@ -11,6 +11,7 @@ function loadImage() {
   var fileinput = document.getElementById("OEM-Image");
   originalImage = new SimpleImage(fileinput);
   grayImage = new SimpleImage(fileinput);
+  redImage = new SimpleImage(fileinput);
   canvas = document.getElementById("can");
   originalImage.drawTo(canvas);
 }
@@ -37,7 +38,6 @@ function grayscaleFiter() {
 }
 
 function redFilter() {
-  redImage = originalImage;
   for (var pixel of redImage.values()) {
     var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
     if (avg < 128) {
@@ -83,24 +83,3 @@ function doRed() {
     redImage.drawTo(canvas);
   }
 }
-
-
-/*
-function redFilter(image) {
-    for (var pixel of image.values()) {
-        avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
-        if (avg < 128) {
-         pixel.setRed(avg * 2);
-         pixel.setGreen(0);
-         pixel.setBlue(0);
-        }
-        else {
-            pixel.setRed(255);
-            pixel.setGreen((avg * 2) - 255);
-            pixel.setBlue((avg * 2) - 255);
-        }
-    }
-}
-
-
-*/
