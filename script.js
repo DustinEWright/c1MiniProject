@@ -62,9 +62,7 @@ function rainbowFilter() {
 // Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
   if (imageIsLoaded(originalImage)) {
-    grayImage = originalImage;
-    redImage = originalImage;
-    rainbowImage = originalImage;
+    loadImage();
   }
   originalImage.drawTo(canvas);
 }
