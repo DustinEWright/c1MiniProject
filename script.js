@@ -83,3 +83,59 @@ function doRed() {
     redImage.drawTo(canvas);
   }
 }
+
+// This code is prototype to be worked into the project.
+
+/*
+var image = new SimpleImage("smalllion.jpg");
+//print(image);
+
+function setBlack(pixel) {
+    pixel.setRed(0);
+    pixel.setGreen(0);
+    pixel.setBlue(0);
+    return pixel;
+}
+
+function addBorder(image, thickness){
+    for (var pixel of image.values()){
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var w = image.getWidth();
+        var h = image.getHeight();
+        
+        // Horizontal border
+        if(x <= thickness || x >= w  - thickness) {
+           setBlack(pixel);
+        }
+        
+        // Vertical border
+        if (y <= thickness || y >= h - thickness) {
+            setBlack(pixel);
+        }
+        
+        // Horizontal Center
+        if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
+            setBlack(pixel);
+        }
+        
+        // Interior vertical
+        if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
+            setBlack(pixel);
+        }
+        
+        if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
+           setBlack(pixel);
+        }
+        
+        if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
+           setBlack(pixel);
+        }
+       
+    }
+    return image;
+}
+
+addBorder(image, 10);
+print(image);
+*/
