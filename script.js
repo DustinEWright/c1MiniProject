@@ -2,6 +2,7 @@
 var originalImage = null;
 var grayImage = null;
 var redImage = null;
+var framedImage = null;
 var rainbowImage = null;
 var canvas = null;
 /* global SimpleImage */
@@ -12,6 +13,7 @@ function loadImage() {
   originalImage = new SimpleImage(fileinput);
   grayImage = new SimpleImage(fileinput);
   redImage = new SimpleImage(fileinput);
+  framedImage = new SimpleImage(fileinput);
   canvas = document.getElementById("can");
   originalImage.drawTo(canvas);
 }
@@ -62,9 +64,7 @@ function rainbowFilter() {
 // Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
   if (imageIsLoaded(originalImage)) {
-    grayImage = originalImage;
-    redImage = originalImage;
-    rainbowImage = originalImage;
+    loadImage();
   }
   originalImage.drawTo(canvas);
 }
@@ -91,13 +91,13 @@ function setBlack(pixel) {
     return pixel;
 }
 
-function addBorder(image){
-    for (var pixel of image.values()){
+function doFrame(framedImage){
+    for (var pixel of framedImage.values()) {
         var thickness = 10;
         var x = pixel.getX();
         var y = pixel.getY();
-        var w = image.getWidth();
-        var h = image.getHeight();
+        var w = framedImage.getWidth();
+        var h = framedImage.getHeight();
         
         // Horizontal border
         if(x <= thickness || x >= w  - thickness) {
@@ -130,7 +130,7 @@ function addBorder(image){
         }
        
     }
-    return image;
+    return framedImage;
 }
 
 
