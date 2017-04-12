@@ -84,11 +84,60 @@ function doRed() {
   }
 }
 
+function setBlack(pixel) {
+    pixel.setRed(0);
+    pixel.setGreen(0);
+    pixel.setBlue(0);
+    return pixel;
+}
+
+function addBorder(image){
+    for (var pixel of image.values()){
+        var thickness = 10;
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var w = image.getWidth();
+        var h = image.getHeight();
+        
+        // Horizontal border
+        if(x <= thickness || x >= w  - thickness) {
+           setBlack(pixel);
+        }
+        
+        // Vertical border
+        if (y <= thickness || y >= h - thickness) {
+            setBlack(pixel);
+        }
+        
+        // Horizontal Center
+        if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
+            setBlack(pixel);
+        }
+        
+        // Interior vertical - Left
+        if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
+            setBlack(pixel);
+        }
+        
+        // Interior vertical - Center
+        if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
+           setBlack(pixel);
+        }
+        
+        // Interior vertical - Right
+        if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
+           setBlack(pixel);
+        }
+       
+    }
+    return image;
+}
+
+
+
 // This code is prototype to be worked into the project.
 
 /*
-var image = new SimpleImage("smalllion.jpg");
-//print(image);
 
 function setBlack(pixel) {
     pixel.setRed(0);
@@ -119,15 +168,17 @@ function addBorder(image, thickness){
             setBlack(pixel);
         }
         
-        // Interior vertical
+        // Interior vertical - Left
         if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
             setBlack(pixel);
         }
         
+        // Interior vertical - Center
         if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
            setBlack(pixel);
         }
         
+        // Interior vertical - Right
         if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
            setBlack(pixel);
         }
