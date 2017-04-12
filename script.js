@@ -104,7 +104,7 @@ function setBlack(pixel) {
 
 function frameFilter(framedImage){
     console.assert(framedImage,"Must pass a parameter");//MGP
-    console.assert(framedImage.getHeight(),"Must be a framed image");//MGP
+    console.assert(framedImage instanceof SimpleImage ,"Must be a SimpleImage object");//MGP
     for (var pixel of framedImage.values()) {
         var thickness = 10;
         var x = pixel.getX();
