@@ -1,3 +1,4 @@
+"use strict"; // MGP: https://www.youtube.com/watch?v=uqUYNqZx0qY
 // Global Variables
 var originalImage = null;
 var grayImage = null;
@@ -20,10 +21,12 @@ function loadImage() {
 
 // Checks if the image is loaded & ready.
 function imageIsLoaded(image) {
+  console.assert(image, "One parameter required."); //MGP
   if (image != null && image.complete()) {
     return true;
   }
   else {
+    console.trace();//MGP: Output stacktrace so we can see who called us
     alert("Image is not loaded.");
   }
 }
@@ -85,8 +88,9 @@ function doRed() {
 }
 
 function doFrame() {
-  if (imageIsLoaded()) {
+  if (imageIsLoaded(framedImage)) { //MGP: Added framedImage
     frameFilter(framedImage);  // How do the other image filters get away without passing in the image?
+    //MGP: Answer -- they use the globals. Parameters are better.
     framedImage.drawTo(canvas);
   }
 }
@@ -99,6 +103,8 @@ function setBlack(pixel) {
 }
 
 function frameFilter(framedImage){
+    console.assert(framedImage,"Must pass a parameter");//MGP
+    console.assert(framedImage.getHeight(),"Must be a framed image");//MGP
     for (var pixel of framedImage.values()) {
         var thickness = 10;
         var x = pixel.getX();
