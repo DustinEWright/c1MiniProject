@@ -2,7 +2,6 @@
 var originalImage = null;
 var grayImage = null;
 var redImage = null;
-var framedImage = null;
 var rainbowImage = null;
 var canvas = null;
 /* global SimpleImage */
@@ -13,7 +12,6 @@ function loadImage() {
   originalImage = new SimpleImage(fileinput);
   grayImage = new SimpleImage(fileinput);
   redImage = new SimpleImage(fileinput);
-  framedImage = new SimpleImage(fileinput);
   canvas = document.getElementById("can");
   originalImage.drawTo(canvas);
 }
@@ -64,7 +62,9 @@ function rainbowFilter() {
 // Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
   if (imageIsLoaded(originalImage)) {
-    loadImage();
+    grayImage = originalImage;
+    redImage = originalImage;
+    rainbowImage = originalImage;
   }
   originalImage.drawTo(canvas);
 }
@@ -84,60 +84,11 @@ function doRed() {
   }
 }
 
-function setBlack(pixel) {
-    pixel.setRed(0);
-    pixel.setGreen(0);
-    pixel.setBlue(0);
-    return pixel;
-}
-
-function doFrame(framedImage){
-    for (var pixel of framedImage.values()) {
-        var thickness = 10;
-        var x = pixel.getX();
-        var y = pixel.getY();
-        var w = framedImage.getWidth();
-        var h = framedImage.getHeight();
-        
-        // Horizontal border
-        if(x <= thickness || x >= w  - thickness) {
-           setBlack(pixel);
-        }
-        
-        // Vertical border
-        if (y <= thickness || y >= h - thickness) {
-            setBlack(pixel);
-        }
-        
-        // Horizontal Center
-        if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
-            setBlack(pixel);
-        }
-        
-        // Interior vertical - Left
-        if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
-            setBlack(pixel);
-        }
-        
-        // Interior vertical - Center
-        if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
-           setBlack(pixel);
-        }
-        
-        // Interior vertical - Right
-        if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
-           setBlack(pixel);
-        }
-       
-    }
-    return framedImage;
-}
-
-
-
 // This code is prototype to be worked into the project.
 
 /*
+var image = new SimpleImage("smalllion.jpg");
+//print(image);
 
 function setBlack(pixel) {
     pixel.setRed(0);
@@ -168,17 +119,15 @@ function addBorder(image, thickness){
             setBlack(pixel);
         }
         
-        // Interior vertical - Left
+        // Interior vertical
         if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
             setBlack(pixel);
         }
         
-        // Interior vertical - Center
         if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
            setBlack(pixel);
         }
         
-        // Interior vertical - Right
         if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
            setBlack(pixel);
         }
