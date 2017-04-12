@@ -2,6 +2,7 @@
 var originalImage = null;
 var grayImage = null;
 var redImage = null;
+var framedImage = null;
 var rainbowImage = null;
 var canvas = null;
 /* global SimpleImage */
@@ -12,6 +13,7 @@ function loadImage() {
   originalImage = new SimpleImage(fileinput);
   grayImage = new SimpleImage(fileinput);
   redImage = new SimpleImage(fileinput);
+  framedImage = new SimpleImage(fileinput);
   canvas = document.getElementById("can");
   originalImage.drawTo(canvas);
 }
@@ -81,6 +83,63 @@ function doRed() {
     redImage.drawTo(canvas);
   }
 }
+
+function doFrame() {
+  if (imageIsLoaded()) {
+    frameFilter(framedImage);  // How do the other image filters get away without passing in the image?
+    framedImage.drawTo(canvas);
+  }
+}
+
+function setBlack(pixel) {
+    pixel.setRed(0);
+    pixel.setGreen(0);
+    pixel.setBlue(0);
+    return pixel;
+}
+
+function frameFilter(framedImage){
+    for (var pixel of framedImage.values()) {
+        var thickness = 10;
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var w = framedImage.getWidth();
+        var h = framedImage.getHeight();
+        
+        // Horizontal border
+        if(x <= thickness || x >= w  - thickness) {
+           setBlack(pixel);
+        }
+        
+        // Vertical border
+        if (y <= thickness || y >= h - thickness) {
+            setBlack(pixel);
+        }
+        
+        // Horizontal Center
+        if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
+            setBlack(pixel);
+        }
+        
+        // Interior vertical
+        if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
+            setBlack(pixel);
+        }
+        
+        if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
+           setBlack(pixel);
+        }
+        
+        if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
+           setBlack(pixel);
+        }
+       
+    }
+    return framedImage;
+}
+
+
+
 
 // This code is prototype to be worked into the project.
 
