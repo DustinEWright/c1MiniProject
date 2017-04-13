@@ -60,7 +60,7 @@ function redFilter() {
 
 
 
-function rainbowFilter() {
+function doRainbow() {
   alert("Rainbow Filter Applied.")
 }
 
