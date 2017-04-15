@@ -7,6 +7,7 @@ var framedImage = null;
 var rainbowImage = null;
 var canvas = null;
 /* global SimpleImage */
+/* global SimplePixel */
 
 // Load the original image:
 function loadImage() {
@@ -99,7 +100,9 @@ function doFrame() {
 
 // Framed Filter Functionality:
 function setBlack(pixel) {
-  console.assert(pixel, "Requires: pixel");
+  //console.assert(pixel, "Requires: pixel");
+  //console.assert(pixel instanceof SimplePixel ,"Must be a SimplePixel object");//MGP
+  console.log(pixel); // outputs "SimplePixel {container: SimpleImage, x: 898, y: 674}"
     pixel.setRed(0);
     pixel.setGreen(0);
     pixel.setBlue(0);
