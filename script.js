@@ -15,6 +15,7 @@ function loadImage() {
   grayImage = new SimpleImage(fileinput);
   redImage = new SimpleImage(fileinput);
   framedImage = new SimpleImage(fileinput);
+  rainbowImage = new SimpleImage(fileinput);
   canvas = document.getElementById("can");
   originalImage.drawTo(canvas);
 }
@@ -58,12 +59,6 @@ function redFilter() {
   }
 }
 
-
-
-function doRainbow() {
-  alert("Rainbow Filter Applied.")
-}
-
 // Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
   if (imageIsLoaded(originalImage)) {
@@ -72,7 +67,7 @@ function resetImage() {
   originalImage.drawTo(canvas);
 }
 
-// This is what the grayscale button actually calls.
+// This is what each filter button actually calls.
 function doGray() {
   if (imageIsLoaded(grayImage)) {
     grayscaleFiter();
@@ -87,6 +82,13 @@ function doRed() {
   }
 }
 
+function doRainbow() {
+  if (imageIsLoaded(rainbowImage)) {
+    redFilter(rainbowImage);
+    rainbowImage.drawTo(canvas);
+  }
+}
+
 function doFrame() {
   if (imageIsLoaded(framedImage)) { //MGP: Added framedImage
     frameFilter(framedImage);  // How do the other image filters get away without passing in the image?
@@ -95,7 +97,9 @@ function doFrame() {
   }
 }
 
+// Framed Filter Functionality:
 function setBlack(pixel) {
+  console.assert(pixel, "Requires: pixel");
     pixel.setRed(0);
     pixel.setGreen(0);
     pixel.setBlue(0);
@@ -143,3 +147,5 @@ function frameFilter(framedImage){
     }
     return framedImage;
 }
+
+
