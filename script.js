@@ -80,7 +80,7 @@ function rainbowFilter() {
 function setBlack(pixel) {
   console.assert(pixel, "Requires: pixel");
   console.assert(pixel instanceof SimplePixel ,"Must be a SimplePixel object");//MGP
-  console.log(pixel); // outputs "SimplePixel {container: SimpleImage, x: 898, y: 674}"
+  //console.log(pixel); // outputs "SimplePixel {container: SimpleImage, x: 898, y: 674}"
     pixel.setRed(0);
     pixel.setGreen(0);
     pixel.setBlue(0);
@@ -101,17 +101,14 @@ function frameFilter(framedImage) {
         if(x <= thickness || x >= w  - thickness) {
            setBlack(pixel);
         }
-        
         // Vertical border
         if (y <= thickness || y >= h - thickness) {
             setBlack(pixel);
         }
-        
         // Horizontal Center
         if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
             setBlack(pixel);
         }
-        
         // Interior vertical
         if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
             setBlack(pixel);
