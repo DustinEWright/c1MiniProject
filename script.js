@@ -41,7 +41,6 @@ function grayscaleFiter() {
     pixel.setGreen(avg);
     pixel.setBlue(avg);
   }
-  grayImage.drawTo(canvas);
 }
 
 function redFilter() {
@@ -85,7 +84,7 @@ function doRed() {
 
 function doRainbow() {
   if (imageIsLoaded(rainbowImage)) {
-    redFilter(rainbowImage);
+    rainbowFilter(rainbowImage);
     rainbowImage.drawTo(canvas);
   }
 }
@@ -149,6 +148,10 @@ function frameFilter(framedImage){
        
     }
     return framedImage;
+}
+
+function rainbowFilter() {
+  
 }
 
 
