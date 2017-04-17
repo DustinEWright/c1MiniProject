@@ -33,23 +33,41 @@ function imageIsLoaded(image) {
   }
 }
 
-// Rainbow stripes
+// Rainbow stripes: red <128
 function setRedBelow128(avg, pixel) {
-  console.assert(avg, "Avg required"); // This is generating an error.  I do not understand why.
+  console.assert(avg, "Avg required"); //DW: This is generating an error.  I do not understand why.
   console.assert(pixel, "pixel required");
       pixel.setRed(avg * 2);
       pixel.setGreen(0);
       pixel.setBlue(0);
 }
-
+// Rainbow stripes: red >128
 function setRedAbove128(avg, pixel) {
-  console.assert(avg, "Avg required"); // This is generating an error.  I do not understand why.
+  console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(255);
   pixel.setGreen((2 * avg) - 255);
   pixel.setBlue((2 * avg) -255);
 }
 
+// Rainbow stripes: orange <128
+function setOrangeBelow128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  // console.log(avg); DW: This did not give me any information in the console
+      pixel.setRed(avg * 2);
+      pixel.setGreen(avg * .8);
+      pixel.setBlue(0);
+}
+
+// Rainbow stripes: orange >128
+function setOrangeAbove128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed(255);
+  pixel.setGreen((1.2 * avg) - 51);
+  pixel.setBlue((2 * avg) -255);
+}
 
 
 
@@ -80,19 +98,33 @@ function redFilter() {
   }
 }
 
+/*
+1/7	0.14285714
+2/7	0.28571429
+3/7	0.42857143
+4/7	0.57142858
+*/
+
+
 // This will be modified to be the rainbowFilter()
 function rainbowFilter() {
   for (var pixel of rainbowImage.values()) {
     var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
     var h = rainbowImage.getHeight();
     var y = pixel.getY();
-    if (y < h/7 && avg < 128) {
+    if (y < (h * .14285714) && avg < 128) {
      setRedBelow128(avg, pixel);
     }
-    else if (y < h/7 && avg >= 128) {
+    else if (y < (h * .14285714) && avg >= 128) {
       setRedAbove128(avg, pixel);
     }
+    else if (y > (h * .14285714) && (y <= (h * .28571429) && avg < 128)) {
+     setOrangeBelow128(avg, pixel);
+    }
+   else if (y > (h * .14285714) && (y <= (h * .28571429) && avg >= 128)) {
+     setOrangeAbove128(avg, pixel);
   }
+}
 }
 
 // Framed Filter Functionality:
