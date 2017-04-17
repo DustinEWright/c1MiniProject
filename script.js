@@ -33,6 +33,27 @@ function imageIsLoaded(image) {
   }
 }
 
+// Rainbow stripes
+function setRedBelow128(avg, pixel) {
+  console.assert(avg, "Avg required"); // This is generating an error.  I do not understand why.
+  console.assert(pixel, "pixel required");
+      pixel.setRed(avg * 2);
+      pixel.setGreen(0);
+      pixel.setBlue(0);
+}
+
+function setRedAbove128(avg, pixel) {
+  console.assert(avg, "Avg required"); // This is generating an error.  I do not understand why.
+  console.assert(pixel, "pixel required");
+  pixel.setRed(255);
+  pixel.setGreen((2 * avg) - 255);
+  pixel.setBlue((2 * avg) -255);
+}
+
+
+
+
+
 // Filter Effects:
 function grayscaleFiter() {
   for (var pixel of grayImage.values()) {
@@ -61,17 +82,15 @@ function redFilter() {
 
 // This will be modified to be the rainbowFilter()
 function rainbowFilter() {
-  for (var pixel of redImage.values()) {
+  for (var pixel of rainbowImage.values()) {
     var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
-    if (avg < 128) {
-      pixel.setRed(avg * 2);
-      pixel.setGreen(0);
-      pixel.setBlue(0);
+    var h = rainbowImage.getHeight();
+    var y = pixel.getY();
+    if (y < h/7 && avg < 128) {
+     setRedBelow128(avg, pixel);
     }
-    else {
-      pixel.setRed(255);
-      pixel.setGreen((avg * 2) - 255);
-      pixel.setBlue((avg * 2) - 255);
+    else if (y < h/7 && avg >= 128) {
+      setRedAbove128(avg, pixel);
     }
   }
 }
