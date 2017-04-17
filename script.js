@@ -76,6 +76,57 @@ function rainbowFilter() {
   }
 }
 
+// Framed Filter Functionality:
+function setBlack(pixel) {
+  console.assert(pixel, "Requires: pixel");
+  console.assert(pixel instanceof SimplePixel ,"Must be a SimplePixel object");//MGP
+  console.log(pixel); // outputs "SimplePixel {container: SimpleImage, x: 898, y: 674}"
+    pixel.setRed(0);
+    pixel.setGreen(0);
+    pixel.setBlue(0);
+    return pixel;
+}
+
+function frameFilter(framedImage) {
+    console.assert(framedImage,"Must pass a parameter");//MGP
+    console.assert(framedImage instanceof SimpleImage ,"Must be a SimpleImage object");//MGP
+    for (var pixel of framedImage.values()) {
+        var thickness = 10;
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var w = framedImage.getWidth();
+        var h = framedImage.getHeight();
+        
+        // Horizontal border
+        if(x <= thickness || x >= w  - thickness) {
+           setBlack(pixel);
+        }
+        
+        // Vertical border
+        if (y <= thickness || y >= h - thickness) {
+            setBlack(pixel);
+        }
+        
+        // Horizontal Center
+        if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
+            setBlack(pixel);
+        }
+        
+        // Interior vertical
+        if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
+            setBlack(pixel);
+        }
+        // Interior vertical
+        if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
+           setBlack(pixel);
+        }
+        // Interior vertical
+        if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
+           setBlack(pixel);
+        }
+    }
+    return framedImage;
+}
 
 // Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
@@ -114,62 +165,3 @@ function doFrame() {
     framedImage.drawTo(canvas);
   }
 }
-
-// Framed Filter Functionality:
-function setBlack(pixel) {
-  //console.assert(pixel, "Requires: pixel");
-  //console.assert(pixel instanceof SimplePixel ,"Must be a SimplePixel object");//MGP
-  console.log(pixel); // outputs "SimplePixel {container: SimpleImage, x: 898, y: 674}"
-    pixel.setRed(0);
-    pixel.setGreen(0);
-    pixel.setBlue(0);
-    return pixel;
-}
-
-function frameFilter(framedImage){
-    console.assert(framedImage,"Must pass a parameter");//MGP
-    console.assert(framedImage instanceof SimpleImage ,"Must be a SimpleImage object");//MGP
-    for (var pixel of framedImage.values()) {
-        var thickness = 10;
-        var x = pixel.getX();
-        var y = pixel.getY();
-        var w = framedImage.getWidth();
-        var h = framedImage.getHeight();
-        
-        // Horizontal border
-        if(x <= thickness || x >= w  - thickness) {
-           setBlack(pixel);
-        }
-        
-        // Vertical border
-        if (y <= thickness || y >= h - thickness) {
-            setBlack(pixel);
-        }
-        
-        // Horizontal Center
-        if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
-            setBlack(pixel);
-        }
-        
-        // Interior vertical
-        if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
-            setBlack(pixel);
-        }
-        
-        if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
-           setBlack(pixel);
-        }
-        
-        if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
-           setBlack(pixel);
-        }
-       
-    }
-    return framedImage;
-}
-
-function rainbowFilter() {
-  
-}
-
-
