@@ -124,22 +124,28 @@ function setBlueAbove128(avg, pixel) {
   pixel.setBlue(255);
 }
 
-
+/*
+setVioletBelow128(avg, pixel);
+setVioletAbove128(avg, pixel);
+*/
 
 // Rainbow strips: indigo < 128
-/*
-R .8 * avg
-G 0
-B 2 * avg
-*/
+function setIndigoBelow128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed(.8 * avg);
+  pixel.setGreen(0);
+  pixel.setBlue(2 * avg);
+}
 
 // Rainbow strips: indigo > 128
-/*
-R 1.2*avg -51
-G 2*avg -255
-B 255
-*/
-
+function setIndigoAbove128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed((1.2 * avg) - 51);
+  pixel.setGreen((2 * avg) -255);
+  pixel.setBlue(255);
+}
 
 
 // Rainbow strips: violet < 128
@@ -204,35 +210,55 @@ function rainbowFilter() {
     // Colors strip 1 of 7 - Red
     if (y < (h * .14285714286) && avg < 128) {
       setRedBelow128(avg, pixel);
-    } 
+    }
     else if (y < (h * .14285714286) && avg >= 128) {
       setRedAbove128(avg, pixel);
-    } // Colors stripe 2 of 7 - Orange
+    }
+    // Colors stripe 2 of 7 - Orange
     else if (y > (h * .14285714286) && (y <= (h * .28571428571) && avg < 128)) {
       setOrangeBelow128(avg, pixel);
     }
     else if (y > (h * .14285714286) && (y <= (h * .28571428571) && avg >= 128)) {
       setOrangeAbove128(avg, pixel);
-    } // Colors stripe 3 of 7 - Yellow
+    }
+    // Colors stripe 3 of 7 - Yellow
     else if (y > (h * .28571428571) && (y <= (h * .42857142857) && avg < 128)) {
       setYellowBelow128(avg, pixel);
     }
     else if (y > (h * .28571428571) && (y <= (h * .42857142857) && avg >= 128)) {
       setYellowAbove128(avg, pixel);
-    } // Colors stripe 4 of 7 - Green
-    else if (y > (h * .42857142857) && (y <= (h * .57142857143) && avg < 228)) {
+    }
+    // Colors stripe 4 of 7 - Green
+    else if (y > (h * .42857142857) && (y <= (h * .57142857143) && avg < 128)) {
       setGreenBelow128(avg, pixel);
     }
-    else if (y > (h * .42857142857) && (y <= (h * .57142857143) && avg >= 228)) {
-       setGreenAbove128(avg, pixel);
-    } // Colors strip 5 of 7 - Blue
-    else if (y > (h * .57142857143) && (y <= (h * .71428571429) && avg < 228)) {
+    else if (y > (h * .42857142857) && (y <= (h * .57142857143) && avg >= 128)) {
+      setGreenAbove128(avg, pixel);
+    }
+    // Colors stripe 5 of 7 - Blue
+    else if (y > (h * .57142857143) && (y <= (h * .71428571429) && avg < 128)) {
       setBlueBelow128(avg, pixel);
-  }
-  else if (y > (h * .57142857143) && (y <= (h * .71428571429) && avg >= 228)) {
+    }
+    else if (y > (h * .57142857143) && (y <= (h * .71428571429) && avg >= 128)) {
       setBlueAbove128(avg, pixel);
+    }
+    // Colors stripe 6 of 7 - Indigo
+     else if (y > (h * .71428571429) && (y <= (h * .85714285714) && avg < 128)) {
+       setIndigoBelow128(avg, pixel);
+     }
+      else if (y > (h * .71428571429) && (y <= (h * .85714285714) && avg >= 128)) {
+       setIndigoAbove128(avg, pixel);
+     }
+    /*
+     // Colors stripe 7 of 7 - Violet
+      else if (y > (h * .85714285714) && avg < 128) {
+       setVioletBelow128(avg, pixel);
+     }
+      else if (y > (h * .85714285714) && avg >= 128) {
+       setVioletAbove128(avg, pixel);
+     }
+     */
   }
-}
 }
 
 
