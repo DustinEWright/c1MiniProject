@@ -28,7 +28,7 @@ function imageIsLoaded(image) {
     return true;
   }
   else {
-    console.trace();//MGP: Output stacktrace so we can see who called us
+    console.trace(); //MGP: Output stacktrace so we can see who called us
     alert("Image is not loaded.");
   }
 }
@@ -37,9 +37,9 @@ function imageIsLoaded(image) {
 function setRedBelow128(avg, pixel) {
   console.assert(avg, "Avg required"); //DW: This is generating an error.  I do not understand why.
   console.assert(pixel, "pixel required");
-      pixel.setRed(avg * 2);
-      pixel.setGreen(0);
-      pixel.setBlue(0);
+  pixel.setRed(avg * 2);
+  pixel.setGreen(0);
+  pixel.setBlue(0);
 }
 // Rainbow stripes: red >128
 function setRedAbove128(avg, pixel) {
@@ -47,7 +47,7 @@ function setRedAbove128(avg, pixel) {
   console.assert(pixel, "pixel required");
   pixel.setRed(255);
   pixel.setGreen((2 * avg) - 255);
-  pixel.setBlue((2 * avg) -255);
+  pixel.setBlue((2 * avg) - 255);
 }
 
 // Rainbow stripes: orange <128
@@ -55,9 +55,9 @@ function setOrangeBelow128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
   // console.log(avg); DW: This did not give me any information in the console
-      pixel.setRed(avg * 2);
-      pixel.setGreen(avg * .8);
-      pixel.setBlue(0);
+  pixel.setRed(avg * 2);
+  pixel.setGreen(avg * .8);
+  pixel.setBlue(0);
 }
 
 // Rainbow stripes: orange >128
@@ -66,6 +66,24 @@ function setOrangeAbove128(avg, pixel) {
   console.assert(pixel, "pixel required");
   pixel.setRed(255);
   pixel.setGreen((1.2 * avg) - 51);
+  pixel.setBlue((2 * avg) - 255);
+}
+
+// Rainbow strips: yellow <128
+function setYellowBelow128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed(2 * avg);
+  pixel.setGreen(2 * avg);
+  pixel.setBlue(0);
+}
+
+// Rainbow strips: yellow >128
+function setYellowAbove128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed(255);
+  pixel.setGreen(255);
   pixel.setBlue((2 * avg) -255);
 }
 
@@ -112,68 +130,72 @@ function rainbowFilter() {
     var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
     var h = rainbowImage.getHeight();
     var y = pixel.getY();
+    // Colors strip 1 of 7
     if (y < (h * .14285714) && avg < 128) {
-     setRedBelow128(avg, pixel);
-    }
+      setRedBelow128(avg, pixel);
+    } 
     else if (y < (h * .14285714) && avg >= 128) {
       setRedAbove128(avg, pixel);
-    }
+    } // Colors stripe 2 of 7
     else if (y > (h * .14285714) && (y <= (h * .28571429) && avg < 128)) {
-     setOrangeBelow128(avg, pixel);
+      setOrangeBelow128(avg, pixel);
     }
-   else if (y > (h * .14285714) && (y <= (h * .28571429) && avg >= 128)) {
-     setOrangeAbove128(avg, pixel);
+    else if (y > (h * .14285714) && (y <= (h * .28571429) && avg >= 128)) {
+      setOrangeAbove128(avg, pixel);
+    }
+    else if (y > (h * .28571429) && (y <= (h * .42857143) && avg < 128)) {
+      setYellowBelow128(avg, pixel);
+    }
   }
-}
 }
 
 // Framed Filter Functionality:
 function setBlack(pixel) {
   console.assert(pixel, "Requires: pixel");
-  console.assert(pixel instanceof SimplePixel ,"Must be a SimplePixel object");//MGP
+  console.assert(pixel instanceof SimplePixel, "Must be a SimplePixel object"); //MGP
   //console.log(pixel); // outputs "SimplePixel {container: SimpleImage, x: 898, y: 674}"
-    pixel.setRed(0);
-    pixel.setGreen(0);
-    pixel.setBlue(0);
-    return pixel;
+  pixel.setRed(0);
+  pixel.setGreen(0);
+  pixel.setBlue(0);
+  return pixel;
 }
 
 function frameFilter(framedImage) {
-    console.assert(framedImage,"Must pass a parameter");//MGP
-    console.assert(framedImage instanceof SimpleImage ,"Must be a SimpleImage object");//MGP
-    for (var pixel of framedImage.values()) {
-        var thickness = 10;
-        var x = pixel.getX();
-        var y = pixel.getY();
-        var w = framedImage.getWidth();
-        var h = framedImage.getHeight();
-        
-        // Horizontal border
-        if(x <= thickness || x >= w  - thickness) {
-           setBlack(pixel);
-        }
-        // Vertical border
-        if (y <= thickness || y >= h - thickness) {
-            setBlack(pixel);
-        }
-        // Horizontal Center
-        if (y >= (h * .5 -3) && y <= (h * .5 + 3)) {
-            setBlack(pixel);
-        }
-        // Interior vertical
-        if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
-            setBlack(pixel);
-        }
-        // Interior vertical
-        if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
-           setBlack(pixel);
-        }
-        // Interior vertical
-        if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
-           setBlack(pixel);
-        }
+  console.assert(framedImage, "Must pass a parameter"); //MGP
+  console.assert(framedImage instanceof SimpleImage, "Must be a SimpleImage object"); //MGP
+  for (var pixel of framedImage.values()) {
+    var thickness = 10;
+    var x = pixel.getX();
+    var y = pixel.getY();
+    var w = framedImage.getWidth();
+    var h = framedImage.getHeight();
+
+    // Horizontal border
+    if (x <= thickness || x >= w - thickness) {
+      setBlack(pixel);
     }
-    return framedImage;
+    // Vertical border
+    if (y <= thickness || y >= h - thickness) {
+      setBlack(pixel);
+    }
+    // Horizontal Center
+    if (y >= (h * .5 - 3) && y <= (h * .5 + 3)) {
+      setBlack(pixel);
+    }
+    // Interior vertical
+    if (x >= (w * .25 - 3) && x <= (w * .25 + 3)) {
+      setBlack(pixel);
+    }
+    // Interior vertical
+    if (x >= (w * .5 - 3) && x <= (w * .5 + 3)) {
+      setBlack(pixel);
+    }
+    // Interior vertical
+    if (x >= (w * .75 - 3) && x <= (w * .75 + 3)) {
+      setBlack(pixel);
+    }
+  }
+  return framedImage;
 }
 
 // Reset & display the original image to the canvas as well as set all images to original.
@@ -208,7 +230,7 @@ function doRainbow() {
 
 function doFrame() {
   if (imageIsLoaded(framedImage)) { //MGP: Added framedImage
-    frameFilter(framedImage);  // How do the other image filters get away without passing in the image?
+    frameFilter(framedImage); // How do the other image filters get away without passing in the image?
     //MGP: Answer -- they use the globals. Parameters are better.
     framedImage.drawTo(canvas);
   }
