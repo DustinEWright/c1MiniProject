@@ -59,7 +59,6 @@ function setOrangeBelow128(avg, pixel) {
   pixel.setGreen(.8 * avg);
   pixel.setBlue(0);
 }
-
 // Rainbow stripes: orange >128
 function setOrangeAbove128(avg, pixel) {
   console.assert(avg, "Avg required");
@@ -69,7 +68,7 @@ function setOrangeAbove128(avg, pixel) {
   pixel.setBlue((2 * avg) - 255);
 }
 
-// Rainbow strips: yellow <128
+// Rainbow stripes: yellow <128
 function setYellowBelow128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -77,8 +76,7 @@ function setYellowBelow128(avg, pixel) {
   pixel.setGreen(2 * avg);
   pixel.setBlue(0);
 }
-
-// Rainbow strips: yellow >128
+// Rainbow stripes: yellow >128
 function setYellowAbove128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -87,7 +85,7 @@ function setYellowAbove128(avg, pixel) {
   pixel.setBlue((2 * avg) - 255);
 }
 
-// Rainbow strips: green < 128
+// Rainbow stripes: green < 128
 function setGreenBelow128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -95,8 +93,7 @@ function setGreenBelow128(avg, pixel) {
   pixel.setGreen(2 * avg);
   pixel.setBlue(0);
 }
-
-// Rainbow strips: green > 128
+// Rainbow stripes: green > 128
 function setGreenAbove128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -106,7 +103,7 @@ function setGreenAbove128(avg, pixel) {
 }
 
 
-// Rainbow strips: blue < 128
+// Rainbow stripes: blue < 128
 function setBlueBelow128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -114,8 +111,7 @@ function setBlueBelow128(avg, pixel) {
   pixel.setGreen(0);
   pixel.setBlue(2 * avg);
 }
-
-// Rainbow strips: blue > 128
+// Rainbow stripes: blue > 128
 function setBlueAbove128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -124,12 +120,8 @@ function setBlueAbove128(avg, pixel) {
   pixel.setBlue(255);
 }
 
-/*
-setVioletBelow128(avg, pixel);
-setVioletAbove128(avg, pixel);
-*/
 
-// Rainbow strips: indigo < 128
+// Rainbow stripes: indigo < 128
 function setIndigoBelow128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -137,8 +129,7 @@ function setIndigoBelow128(avg, pixel) {
   pixel.setGreen(0);
   pixel.setBlue(2 * avg);
 }
-
-// Rainbow strips: indigo > 128
+// Rainbow stripes: indigo > 128
 function setIndigoAbove128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
@@ -148,22 +139,22 @@ function setIndigoAbove128(avg, pixel) {
 }
 
 
-// Rainbow strips: violet < 128
-/*
-R 1.6 * avg
-G 0
-B 1.6 * avg
-*/
-
-// Rainbow strips: violet > 128
-/*
-R .4 * avg + 153
-G 2 * avg - 255
-B .4 * avg + 153
-*/
-
-
-
+// Rainbow stripes: violet < 128
+function setVioletBelow128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed(1.6 * avg);
+  pixel.setGreen(0);
+  pixel.setBlue(1.6 * avg);
+}
+// Rainbow stripes: violet > 128
+function setVioletAbove128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed((.4 * avg) + 153);
+  pixel.setGreen((2 * avg) - 255);
+  pixel.setBlue((.4 * avg) + 153);
+}
 
 // Filter Effects:
 function grayscaleFiter() {
@@ -191,23 +182,12 @@ function redFilter() {
   }
 }
 
-/*
-1/7 0.14285714286
-2/7 0.28571428571
-3/7 0.42857142857
-4/7 0.57142857143
-5/7 0.71428571429
-6/7 0.85714285714
-*/
-
-
-// This will be modified to be the rainbowFilter()
 function rainbowFilter() {
   for (var pixel of rainbowImage.values()) {
     var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
     var h = rainbowImage.getHeight();
     var y = pixel.getY();
-    // Colors strip 1 of 7 - Red
+    // Colors stripe 1 of 7 - Red
     if (y < (h * .14285714286) && avg < 128) {
       setRedBelow128(avg, pixel);
     }
@@ -249,7 +229,6 @@ function rainbowFilter() {
       else if (y > (h * .71428571429) && (y <= (h * .85714285714) && avg >= 128)) {
        setIndigoAbove128(avg, pixel);
      }
-    /*
      // Colors stripe 7 of 7 - Violet
       else if (y > (h * .85714285714) && avg < 128) {
        setVioletBelow128(avg, pixel);
@@ -257,12 +236,8 @@ function rainbowFilter() {
       else if (y > (h * .85714285714) && avg >= 128) {
        setVioletAbove128(avg, pixel);
      }
-     */
   }
 }
-
-
-
 
 // Framed Filter Functionality:
 function setBlack(pixel) {
