@@ -107,18 +107,22 @@ function setGreenAbove128(avg, pixel) {
 
 
 // Rainbow strips: blue < 128
-/*
-R 0
-G 0
-B 2 * avg
-*/
+function setBlueBelow128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed(0);
+  pixel.setGreen(0);
+  pixel.setBlue(2 * avg);
+}
 
 // Rainbow strips: blue > 128
-/*
-R 2*avg -255
-G 2*avg -255
-B 255
-*/
+function setBlueAbove128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed((2 * avg) - 255);
+  pixel.setGreen((2 * avg) - 255);
+  pixel.setBlue(255);
+}
 
 
 
@@ -182,10 +186,12 @@ function redFilter() {
 }
 
 /*
-1/7	0.14285714
-2/7	0.28571429
-3/7	0.42857143
-4/7	0.57142858
+1/7 0.14285714286
+2/7 0.28571428571
+3/7 0.42857142857
+4/7 0.57142857143
+5/7 0.71428571429
+6/7 0.85714285714
 */
 
 
@@ -196,33 +202,41 @@ function rainbowFilter() {
     var h = rainbowImage.getHeight();
     var y = pixel.getY();
     // Colors strip 1 of 7 - Red
-    if (y < (h * .14285714) && avg < 128) {
+    if (y < (h * .14285714286) && avg < 128) {
       setRedBelow128(avg, pixel);
     } 
-    else if (y < (h * .14285714) && avg >= 128) {
+    else if (y < (h * .14285714286) && avg >= 128) {
       setRedAbove128(avg, pixel);
     } // Colors stripe 2 of 7 - Orange
-    else if (y > (h * .14285714) && (y <= (h * .28571429) && avg < 128)) {
+    else if (y > (h * .14285714286) && (y <= (h * .28571428571) && avg < 128)) {
       setOrangeBelow128(avg, pixel);
     }
-    else if (y > (h * .14285714) && (y <= (h * .28571429) && avg >= 128)) {
+    else if (y > (h * .14285714286) && (y <= (h * .28571428571) && avg >= 128)) {
       setOrangeAbove128(avg, pixel);
     } // Colors stripe 3 of 7 - Yellow
-    else if (y > (h * .28571429) && (y <= (h * .42857143) && avg < 128)) {
+    else if (y > (h * .28571428571) && (y <= (h * .42857142857) && avg < 128)) {
       setYellowBelow128(avg, pixel);
     }
-    else if (y > (h * .28571429) && (y <= (h * .42857143) && avg >= 128)) {
+    else if (y > (h * .28571428571) && (y <= (h * .42857142857) && avg >= 128)) {
       setYellowAbove128(avg, pixel);
     } // Colors stripe 4 of 7 - Green
-    else if (y > (h * .42857143) && (y <= (h * .57142858) && avg < 228)) {
+    else if (y > (h * .42857142857) && (y <= (h * .57142857143) && avg < 228)) {
       setGreenBelow128(avg, pixel);
     }
-    else if (y > (h * .42857143) && (y <= (h * .57142858) && avg >= 228)) {
+    else if (y > (h * .42857142857) && (y <= (h * .57142857143) && avg >= 228)) {
        setGreenAbove128(avg, pixel);
-    }
-    
+    } // Colors strip 5 of 7 - Blue
+    else if (y > (h * .57142857143) && (y <= (h * .71428571429) && avg < 228)) {
+      setBlueBelow128(avg, pixel);
+  }
+  else if (y > (h * .57142857143) && (y <= (h * .71428571429) && avg >= 228)) {
+      setBlueAbove128(avg, pixel);
   }
 }
+}
+
+
+
 
 // Framed Filter Functionality:
 function setBlack(pixel) {
