@@ -130,21 +130,24 @@ function rainbowFilter() {
     var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
     var h = rainbowImage.getHeight();
     var y = pixel.getY();
-    // Colors strip 1 of 7
+    // Colors strip 1 of 7 - Red
     if (y < (h * .14285714) && avg < 128) {
       setRedBelow128(avg, pixel);
     } 
     else if (y < (h * .14285714) && avg >= 128) {
       setRedAbove128(avg, pixel);
-    } // Colors stripe 2 of 7
+    } // Colors stripe 2 of 7 - Orange
     else if (y > (h * .14285714) && (y <= (h * .28571429) && avg < 128)) {
       setOrangeBelow128(avg, pixel);
     }
     else if (y > (h * .14285714) && (y <= (h * .28571429) && avg >= 128)) {
       setOrangeAbove128(avg, pixel);
-    }
+    } // Colors stripe 3 of 7 - Yellow
     else if (y > (h * .28571429) && (y <= (h * .42857143) && avg < 128)) {
       setYellowBelow128(avg, pixel);
+    }
+    else if (y > (h * .28571429) && (y <= (h * .42857143) && avg >= 128)) {
+      setYellowAbove128(avg, pixel);
     }
   }
 }
