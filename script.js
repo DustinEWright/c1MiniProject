@@ -59,6 +59,24 @@ function redFilter() {
   }
 }
 
+// This will be modified to be the rainbowFilter()
+function rainbowFilter() {
+  for (var pixel of redImage.values()) {
+    var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+    if (avg < 128) {
+      pixel.setRed(avg * 2);
+      pixel.setGreen(0);
+      pixel.setBlue(0);
+    }
+    else {
+      pixel.setRed(255);
+      pixel.setGreen((avg * 2) - 255);
+      pixel.setBlue((avg * 2) - 255);
+    }
+  }
+}
+
+
 // Reset & display the original image to the canvas as well as set all images to original.
 function resetImage() {
   if (imageIsLoaded(originalImage)) {
