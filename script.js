@@ -37,7 +37,7 @@ function imageIsLoaded(image) {
 function setRedBelow128(avg, pixel) {
   console.assert(avg, "Avg required"); //DW: This is generating an error.  I do not understand why.
   console.assert(pixel, "pixel required");
-  pixel.setRed(avg * 2);
+  pixel.setRed(2 * avg);
   pixel.setGreen(0);
   pixel.setBlue(0);
 }
@@ -55,8 +55,8 @@ function setOrangeBelow128(avg, pixel) {
   console.assert(avg, "Avg required");
   console.assert(pixel, "pixel required");
   // console.log(avg); DW: This did not give me any information in the console
-  pixel.setRed(avg * 2);
-  pixel.setGreen(avg * .8);
+  pixel.setRed(2 * avg);
+  pixel.setGreen(.8 * avg);
   pixel.setBlue(0);
 }
 
@@ -84,8 +84,73 @@ function setYellowAbove128(avg, pixel) {
   console.assert(pixel, "pixel required");
   pixel.setRed(255);
   pixel.setGreen(255);
-  pixel.setBlue((2 * avg) -255);
+  pixel.setBlue((2 * avg) - 255);
 }
+
+// Rainbow strips: green < 128
+function setGreenBelow128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed(0);
+  pixel.setGreen(2 * avg);
+  pixel.setBlue(0);
+}
+
+// Rainbow strips: green > 128
+function setGreenAbove128(avg, pixel) {
+  console.assert(avg, "Avg required");
+  console.assert(pixel, "pixel required");
+  pixel.setRed((2 * avg) - 255);
+  pixel.setGreen(255);
+  pixel.setBlue((2 * avg) - 255);
+}
+
+
+// Rainbow strips: blue < 128
+/*
+R 0
+G 0
+B 2 * avg
+*/
+
+// Rainbow strips: blue > 128
+/*
+R 2*avg -255
+G 2*avg -255
+B 255
+*/
+
+
+
+// Rainbow strips: indigo < 128
+/*
+R .8 * avg
+G 0
+B 2 * avg
+*/
+
+// Rainbow strips: indigo > 128
+/*
+R 1.2*avg -51
+G 2*avg -255
+B 255
+*/
+
+
+
+// Rainbow strips: violet < 128
+/*
+R 1.6 * avg
+G 0
+B 1.6 * avg
+*/
+
+// Rainbow strips: violet > 128
+/*
+R .4 * avg + 153
+G 2 * avg - 255
+B .4 * avg + 153
+*/
 
 
 
@@ -148,7 +213,14 @@ function rainbowFilter() {
     }
     else if (y > (h * .28571429) && (y <= (h * .42857143) && avg >= 128)) {
       setYellowAbove128(avg, pixel);
+    } // Colors stripe 4 of 7 - Green
+    else if (y > (h * .42857143) && (y <= (h * .57142858) && avg < 228)) {
+      setGreenBelow128(avg, pixel);
     }
+    else if (y > (h * .42857143) && (y <= (h * .57142858) && avg >= 228)) {
+       setGreenAbove128(avg, pixel);
+    }
+    
   }
 }
 
