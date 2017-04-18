@@ -34,18 +34,22 @@ function imageIsLoaded(image) {
     alert("Image is not loaded.");
   }
 }
-
+/*
+When avg is not passed into the function, it evaluates to false and triggers the assert.   When avg is zero it also evaluates to false and triggers the assert.
+A more formal, proper, and robust way to check if avg has not been passed into the function is by using typeof.   If avg was not passed in, it will be undefined.  The typeof check for this.  
+Here is my random google result: http://stackoverflow.com/questions/3390396/how-to-check-for-undefined-in-javascript
+*/
 // Rainbow stripes: red <128
 function setRedBelow128(avg, pixel) {
-  console.assert(avg, "Avg required"); //DW: This is generating an error.  I do not understand why.
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(2 * avg);
   pixel.setGreen(0);
-  pixel.setBlue(0);
+  pixel.setBlue(0);d
 }
 // Rainbow stripes: red >128
 function setRedAbove128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(255);
   pixel.setGreen((2 * avg) - 255);
@@ -54,7 +58,7 @@ function setRedAbove128(avg, pixel) {
 
 // Rainbow stripes: orange <128
 function setOrangeBelow128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   // console.log(avg); DW: This did not give me any information in the console
   pixel.setRed(2 * avg);
@@ -63,7 +67,7 @@ function setOrangeBelow128(avg, pixel) {
 }
 // Rainbow stripes: orange >128
 function setOrangeAbove128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(255);
   pixel.setGreen((1.2 * avg) - 51);
@@ -72,7 +76,7 @@ function setOrangeAbove128(avg, pixel) {
 
 // Rainbow stripes: yellow <128
 function setYellowBelow128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(2 * avg);
   pixel.setGreen(2 * avg);
@@ -80,7 +84,7 @@ function setYellowBelow128(avg, pixel) {
 }
 // Rainbow stripes: yellow >128
 function setYellowAbove128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(255);
   pixel.setGreen(255);
@@ -89,7 +93,7 @@ function setYellowAbove128(avg, pixel) {
 
 // Rainbow stripes: green < 128
 function setGreenBelow128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(0);
   pixel.setGreen(2 * avg);
@@ -97,7 +101,7 @@ function setGreenBelow128(avg, pixel) {
 }
 // Rainbow stripes: green > 128
 function setGreenAbove128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed((2 * avg) - 255);
   pixel.setGreen(255);
@@ -107,7 +111,7 @@ function setGreenAbove128(avg, pixel) {
 
 // Rainbow stripes: blue < 128
 function setBlueBelow128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(0);
   pixel.setGreen(0);
@@ -115,7 +119,7 @@ function setBlueBelow128(avg, pixel) {
 }
 // Rainbow stripes: blue > 128
 function setBlueAbove128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed((2 * avg) - 255);
   pixel.setGreen((2 * avg) - 255);
@@ -125,7 +129,7 @@ function setBlueAbove128(avg, pixel) {
 
 // Rainbow stripes: indigo < 128
 function setIndigoBelow128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(.8 * avg);
   pixel.setGreen(0);
@@ -133,7 +137,7 @@ function setIndigoBelow128(avg, pixel) {
 }
 // Rainbow stripes: indigo > 128
 function setIndigoAbove128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed((1.2 * avg) - 51);
   pixel.setGreen((2 * avg) -255);
@@ -143,7 +147,7 @@ function setIndigoAbove128(avg, pixel) {
 
 // Rainbow stripes: violet < 128
 function setVioletBelow128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed(1.6 * avg);
   pixel.setGreen(0);
@@ -151,7 +155,7 @@ function setVioletBelow128(avg, pixel) {
 }
 // Rainbow stripes: violet > 128
 function setVioletAbove128(avg, pixel) {
-  console.assert(avg, "Avg required");
+  console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed((.4 * avg) + 153);
   pixel.setGreen((2 * avg) - 255);
