@@ -298,8 +298,19 @@ function frameFilter(framedImage) {
 function blurFilter() {
 
 }
+
+
+function doBlur() {
+  if (imageIsLoaded(blurImage)) {
+    blurFilter();
+    blurImage.drawTo(canvas);
+  }
+}
+
+
+
 /*
-We begin by creating a blank image. For each pixel we will do one of two things:
+We begin by creating a blank image.  For each pixel we will do one of two things:
 half the time, we will simply copy the pixel from that location in the old picture.
 The other half of the time we will find a pixel nearby and copy that pixel instead.
 We will do this by generating a random number between 0 and 1. If the random number
@@ -360,8 +371,4 @@ function doFrame() {
     //MGP: Answer -- they use the globals. Parameters are better.
     framedImage.drawTo(canvas);
   }
-}
-
-function doBlur() {
-  alert("Blur Filter Applied");
 }
