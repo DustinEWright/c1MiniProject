@@ -45,7 +45,7 @@ function setRedBelow128(avg, pixel) {
   console.assert(pixel, "pixel required");
   pixel.setRed(2 * avg);
   pixel.setGreen(0);
-  pixel.setBlue(0);d
+  pixel.setBlue(0);
 }
 // Rainbow stripes: red >128
 function setRedAbove128(avg, pixel) {
