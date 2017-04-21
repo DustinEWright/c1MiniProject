@@ -335,7 +335,7 @@ function blurFilter() {
 }
 */
 
-function splatFilter() {
+function splatFilter(splatImage) {
   for (var pixel of splatImage.values()) {
     var x = pixel.getX();
     var y = pixel.getY();
