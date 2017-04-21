@@ -5,6 +5,7 @@ var grayImage = null;
 var redImage = null;
 var framedImage = null;
 var rainbowImage = null;
+var splatImage = null;
 var blurImage = null;
 var canvas = null;
 /* global SimpleImage */
@@ -18,6 +19,7 @@ function loadImage() {
   redImage = new SimpleImage(fileinput);
   framedImage = new SimpleImage(fileinput);
   rainbowImage = new SimpleImage(fileinput);
+  splatImage = new SimpleImage(fileinput);
   blurImage = new SimpleImage(fileinput);
   canvas = document.getElementById("can");
   originalImage.drawTo(canvas);
@@ -140,7 +142,7 @@ function setIndigoAbove128(avg, pixel) {
   console.assert(typeof avg != 'undefined', "Avg required");
   console.assert(pixel, "pixel required");
   pixel.setRed((1.2 * avg) - 51);
-  pixel.setGreen((2 * avg) -255);
+  pixel.setGreen((2 * avg) - 255);
   pixel.setBlue(255);
 }
 
@@ -229,19 +231,19 @@ function rainbowFilter() {
       setBlueAbove128(avg, pixel);
     }
     // Colors stripe 6 of 7 - Indigo
-     else if (y > (h * .71428571429) && (y <= (h * .85714285714) && avg < 128)) {
-       setIndigoBelow128(avg, pixel);
-     }
-      else if (y > (h * .71428571429) && (y <= (h * .85714285714) && avg >= 128)) {
-       setIndigoAbove128(avg, pixel);
-     }
-     // Colors stripe 7 of 7 - Violet
-      else if (y > (h * .85714285714) && avg < 128) {
-       setVioletBelow128(avg, pixel);
-     }
-      else if (y > (h * .85714285714) && avg >= 128) {
-       setVioletAbove128(avg, pixel);
-     }
+    else if (y > (h * .71428571429) && (y <= (h * .85714285714) && avg < 128)) {
+      setIndigoBelow128(avg, pixel);
+    }
+    else if (y > (h * .71428571429) && (y <= (h * .85714285714) && avg >= 128)) {
+      setIndigoAbove128(avg, pixel);
+    }
+    // Colors stripe 7 of 7 - Violet
+    else if (y > (h * .85714285714) && avg < 128) {
+      setVioletBelow128(avg, pixel);
+    }
+    else if (y > (h * .85714285714) && avg >= 128) {
+      setVioletAbove128(avg, pixel);
+    }
   }
 }
 
@@ -293,82 +295,179 @@ function frameFilter(framedImage) {
   }
   return framedImage;
 }
+/*  This is still a work in progress
+function ensureInImage(coordinate, size) {
+  // coordinate cannot be negative
+  if (coordinate < 0) {
+    return 0;
+  }
+  // coordinate must be in range [0 .. size-1]
+  if (coordinate >= size) {
+    return size - 1;
+  }
+  return coordinate;
+}
+
+
+function getPixelNearby() {
+  var dx = Math.random() * diameter - diameter / 2;
+  var dy = Math.random() * diameter - diameter / 2;
+  var nx = ensureInImage(x + dx, image.getWidth());
+  var ny = ensureInImage(y + dy, image.getHeight());
+  return image.getPixel(nx, ny);
+}
 
 // Blur filter
 function blurFilter() {
-
-}
-
-
-function doBlur() {
-  if (imageIsLoaded(blurImage)) {
-    blurFilter();
-    blurImage.drawTo(canvas);
+  for (var pixel of blurImage.values()) {
+    var x = blurImage.getX();
+    var y = blurImage.getY();
+    if (Math.random() > 0.5) {
+      // The other half of the time we will find a pixel nearby and copy that pixel instead.
+      var other = getPixelNearby(blurImage, x, y, 10);
+      blurImage.setPixel(x, y, other);
+    }
+    else {
+      // half the time, we will simply copy the pixel from that location in the old picture.
+      blurImage.setPixel(x, y, pixel);
+    }
   }
 }
-
-
-
-/*
-We begin by creating a blank image.  For each pixel we will do one of two things:
-half the time, we will simply copy the pixel from that location in the old picture.
-The other half of the time we will find a pixel nearby and copy that pixel instead.
-We will do this by generating a random number between 0 and 1. If the random number
-generated is less than 0.5 (which it will be approximately half the time), we will
-copy the pixel from the old picture. Otherwise, we will find and copy a nearby pixel.
-
-We must figure out how to find a "nearby" pixel. We will define some value for how far
-away the new pixel will be (say, 10 pixels) and then we write a function that will give
-x and y coordinates that are a random amount between 0 and 10 pixels away. For example,
-it could give a pixel that is 5 pixels to the left and 3 pixels higher.
-
-Before we use these coordinates to get a new pixel, we must check that the new coordinates
-still give a valid pixel in the image. For example, imagine we are finding a pixel to replace
-a pixel at the very top of the image. The function that generates coordinates gives us a point
-that is 3 pixels up, but since we are on the top of the image (y = 0) we cannot go up by three
-pixels (y would be -3)! If the random number is too big (larger than the width-1 or height-1)
-or too small (less than 0) then we will just use the closest number that is valid.
-
-Once we have a valid pixel that is some amount away, we use its red, green, and blue values as
-the new pixel's values.
 */
 
-
-
-// Reset & display the original image to the canvas as well as set all images to original.
-function resetImage() {
-  if (imageIsLoaded(originalImage)) {
-    loadImage();
-  }
-  originalImage.drawTo(canvas);
-}
-
-// This is what each filter button actually calls.
-function doGray() {
-  if (imageIsLoaded(grayImage)) {
-    grayscaleFiter();
-    grayImage.drawTo(canvas);
+function splatFilter() {
+  for (var pixel of splatImage.values()) {
+    var x = pixel.getX();
+    var y = pixel.getY();
+    if (Math.random() < 0.5) {
+      // Changes the pixel to Magenta
+      pixel.setRed(255);
+      pixel.setGreen(0);
+      pixel.setBlue(255);
+    }
   }
 }
 
-function doRed() {
-  if (imageIsLoaded(redImage)) {
-    redFilter();
-    redImage.drawTo(canvas);
+// Create an imput element for this.
+function doSplat() {
+  if (imageIsLoaded()) {
+    splatFilter(splatImage);
+    splatImage.drawTo(canvas);
   }
 }
 
-function doRainbow() {
-  if (imageIsLoaded(rainbowImage)) {
-    rainbowFilter(rainbowImage);
-    rainbowImage.drawTo(canvas);
-  }
-}
 
-function doFrame() {
-  if (imageIsLoaded(framedImage)) { //MGP: Added framedImage
-    frameFilter(framedImage); // How do the other image filters get away without passing in the image?
-    //MGP: Answer -- they use the globals. Parameters are better.
-    framedImage.drawTo(canvas);
+  function doBlur() {
+    if (imageIsLoaded(blurImage)) {
+      blurFilter(blurImage);
+      blurImage.drawTo(canvas);
+    }
   }
-}
+
+  /*
+  We begin by creating a blank image. // This is blurImage that is created in the loadImage function.  No need to create this a second time.
+
+  For each pixel we will do one of two things:
+
+    1) half the time, we will simply copy the pixel from that location in the old picture.
+
+    2) The other half of the time we will find a pixel nearby and copy that pixel instead.
+
+  We will do this by generating a random number between 0 and 1. If the random number
+  generated is less than 0.5 (which it will be approximately half the time), we will
+  copy the pixel from the old picture. Otherwise, we will find and copy a nearby pixel.
+
+  We must figure out how to find a "nearby" pixel. We will define some value for how far
+  away the new pixel will be (say, 10 pixels) and then we write a function that will give
+  x and y coordinates that are a random amount between 0 and 10 pixels away. For example,
+  it could give a pixel that is 5 pixels to the left and 3 pixels higher.
+
+  Before we use these coordinates to get a new pixel, we must check that the new coordinates
+  still give a valid pixel in the image. For example, imagine we are finding a pixel to replace
+  a pixel at the very top of the image. The function that generates coordinates gives us a point
+  that is 3 pixels up, but since we are on the top of the image (y = 0) we cannot go up by three
+  pixels (y would be -3)! If the random number is too big (larger than the width-1 or height-1)
+  or too small (less than 0) then we will just use the closest number that is valid.
+
+  Once we have a valid pixel that is some amount away, we use its red, green, and blue values as
+  the new pixel's values.
+
+
+  // blur by moving random pixels
+  function ensureInImage (coordinate, size) {
+      // coordinate cannot be negative
+      if (coordinate < 0) {
+          return 0;
+      }
+      // coordinate must be in range [0 .. size-1]
+      if (coordinate >= size) {
+          return size - 1;
+      }
+      return coordinate;
+  }
+
+  function getPixelNearby (image, x, y, diameter) {
+      var dx = Math.random() * diameter - diameter / 2;
+      var dy = Math.random() * diameter - diameter / 2;
+      var nx = ensureInImage(x + dx, image.getWidth());
+      var ny = ensureInImage(y + dy, image.getHeight());
+      return image.getPixel(nx, ny);
+  }
+
+
+  var image = new SimpleImage("duvall.jpg");
+  var output = new SimpleImage(image.getWidth(), image.getHeight());
+
+  for (var pixel of image.values()) {
+      var x = pixel.getX();
+      var y = pixel.getY();
+      if (Math.random() > 0.5) {
+          var other = getPixelNearby(image, x, y, 10);
+          output.setPixel(x, y, other);
+      }
+      else {
+          output.setPixel(x, y, pixel);
+      }
+  }
+  print(output);
+  */
+
+
+
+  // Reset & display the original image to the canvas as well as set all images to original.
+  function resetImage() {
+    if (imageIsLoaded(originalImage)) {
+      loadImage();
+    }
+    originalImage.drawTo(canvas);
+  }
+
+  // This is what each filter button actually calls.
+  function doGray() {
+    if (imageIsLoaded(grayImage)) {
+      grayscaleFiter();
+      grayImage.drawTo(canvas);
+    }
+  }
+
+  function doRed() {
+    if (imageIsLoaded(redImage)) {
+      redFilter();
+      redImage.drawTo(canvas);
+    }
+  }
+
+  function doRainbow() {
+    if (imageIsLoaded(rainbowImage)) {
+      rainbowFilter(rainbowImage);
+      rainbowImage.drawTo(canvas);
+    }
+  }
+
+  function doFrame() {
+    if (imageIsLoaded(framedImage)) { //MGP: Added framedImage
+      frameFilter(framedImage); // How do the other image filters get away without passing in the image?
+      //MGP: Answer -- they use the globals. Parameters are better.
+      framedImage.drawTo(canvas);
+    }
+  }
